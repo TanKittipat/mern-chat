@@ -79,3 +79,52 @@ export const signIn = async (req, res) => {
     });
   }
 };
+
+export const logout = async (req, res) => {
+  try {
+    res.cookie("jwt", "", { maxAge: 0 });
+    res.status(200).json({ message: "Logout successful" });
+  } catch (error) {
+    res.status(500).json({
+      message:
+        "Internal server error while registering new user!" || error.message,
+    });
+  }
+};
+
+export const updateProfile = async (req, res) => {
+  try {
+    const { profilePicture } = req.body;
+    const userId = req.user._id;
+
+    if (!profilePicture) {
+      return res.status(400).json({ message: "Profile picture is required!" });
+    }
+
+    const uploadResponse = await cloudinary.uploader.upload(profilePicture);
+    if (!uploadResponse) {
+      res
+        .status(500)
+        .json({ message: "Error while updating profile picture!" });
+    }
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      userId,
+      {
+        profilePicture: uploadResponse.secure_url,
+      },
+      { new: true }
+    );
+    if (updatedUser) {
+      res.status(200).json(updatedUser);
+    } else {
+      res
+        .status(500)
+        .json({ message: "Error while updating profile picture!" });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message:
+        "Internal server error while registering new user!" || error.message,
+    });
+  }
+};
