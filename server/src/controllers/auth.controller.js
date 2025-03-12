@@ -95,6 +95,7 @@ export const logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const { profilePicture } = req.body;
+    // Middleware needed
     const userId = req.user._id;
 
     if (!profilePicture) {
