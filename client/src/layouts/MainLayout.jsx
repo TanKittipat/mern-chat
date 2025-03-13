@@ -1,9 +1,12 @@
 import { Outlet } from "react-router";
 import "./layout.css";
+import Navbar from "../components/Navbar";
 
 const MainLayout = () => {
+  const theme = "dark";
   return (
-    <div>
+    <div data-theme={theme}>
+      <Navbar />
       <Outlet />
     </div>
   );

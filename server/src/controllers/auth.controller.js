@@ -86,8 +86,7 @@ export const logout = async (req, res) => {
     res.status(200).json({ message: "Logout successful" });
   } catch (error) {
     res.status(500).json({
-      message:
-        "Internal server error while registering new user!" || error.message,
+      message: "Internal server error while logging in user!" || error.message,
     });
   }
 };
@@ -125,7 +124,18 @@ export const updateProfile = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message:
-        "Internal server error while registering new user!" || error.message,
+        "Internal server error while updating profile picture!" ||
+        error.message,
+    });
+  }
+};
+
+export const checkAuth = async (req, res) => {
+  try {
+    res.status(200).json(req.user);
+  } catch (error) {
+    res.status(500).json({
+      message: "Internal server error while checking auth!" || error.message,
     });
   }
 };
