@@ -3,12 +3,13 @@ import "./layout.css";
 import Navbar from "../components/Navbar";
 import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "../stores/useAuthStore";
+import { useThemeStore } from "../stores/useThemeStore";
 import { useEffect } from "react";
 import { Loader } from "lucide-react";
 
 const MainLayout = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
-  const theme = "dark";
+  const { theme } = useThemeStore();
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
@@ -20,7 +21,7 @@ const MainLayout = () => {
     );
   }
   return (
-    <div data-theme={theme}>
+    <div data-theme={theme || "dark"}>
       <Navbar />
       <Outlet />
       <Toaster />

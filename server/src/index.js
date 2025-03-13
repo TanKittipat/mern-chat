@@ -4,11 +4,11 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import { connectDB } from "./lib/db.js";
 import authRouter from "./routers/auth.router.js";
+import messageRouter from "./routers/message.router.js";
+import { app, server } from "./lib/socket.js";
 
 const BASE_URL = process.env.BASE_URL;
 const PORT = process.env.PORT;
-
-const app = express();
 
 app.use(express.json({ limit: "50mb" }));
 app.use(
@@ -24,8 +24,9 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRouter);
+app.use("/api/messages", messageRouter);
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log("Server is running on : http://localhost:" + PORT);
   connectDB();
 });

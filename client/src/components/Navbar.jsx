@@ -4,7 +4,7 @@ import { useAuthStore } from "../stores/useAuthStore";
 const Navbar = () => {
   const { logout, authUser } = useAuthStore();
   return (
-    <header className="navbar bg-base-100 shadow-md">
+    <header className="navbar bg-base-100 shadow-md fixed top-0">
       <div className="navbar-start">
         <a href="/" className="btn btn-ghost text-xl">
           <MessageSquare className="text-primary" />
@@ -12,8 +12,8 @@ const Navbar = () => {
         </a>
       </div>
       <div className="navbar-end">
-        <div className="gap-2">
-          <a href="/signup" className="btn">
+        <div className="space-x-1.5">
+          <a href="/settings" className="btn">
             <Settings className="size-4" /> Settings
           </a>
           {authUser && (
@@ -22,7 +22,7 @@ const Navbar = () => {
                 <User className="size-4" />
                 Profile
               </a>
-              <button className="btn">
+              <button className="btn" onClick={() => logout()}>
                 <LogOut className="size-4" />
                 Logout
               </button>
