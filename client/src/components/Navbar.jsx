@@ -4,8 +4,8 @@ const Navbar = () => {
   return (
     <header className="navbar bg-base-100 shadow-md">
       <div className="navbar-start">
-        <a className="btn btn-ghost text-xl">
-          <MessageSquare className="text-orange-400" />
+        <a href="/" className="btn btn-ghost text-xl">
+          <MessageSquare className="text-primary" />
           <span className="font-semibold">SE Chat</span>
         </a>
       </div>
