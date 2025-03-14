@@ -32,6 +32,13 @@ io.on("connection", (socket) => {
     }
   });
 
+  socket.on("friendReqAccepted", (friendId) => {
+    const receiverSocketId = getReceiverSocketId(friendId);
+    if (receiverSocketId) {
+      io.to(receiverSocketId).emit("friendReqAccepted", userId);
+    }
+  });
+
   socket.on("disconnect", () => {
     console.log("A user disconnected!", socket.id);
     delete userSocketMap[userId];

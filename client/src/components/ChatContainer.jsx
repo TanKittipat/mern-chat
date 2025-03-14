@@ -21,6 +21,7 @@ const ChatContainer = () => {
     setFriendReqSent,
     setFriendReqReceived,
     addFriend,
+    acceptFriendReq,
   } = useChatStore();
   const { authUser } = useAuthStore();
   const messagesEndRef = useRef(null);
@@ -47,6 +48,20 @@ const ChatContainer = () => {
     }
   }, [messages]);
 
+  useEffect(() => {
+    if (authUser && selectedUser) {
+      setIsFriend(authUser.friends.includes(selectedUser._id));
+      setFriendReqReceived(authUser.friendsReq.includes(selectedUser._id));
+      setFriendReqSent(selectedUser.friendsReq.includes(authUser._id));
+    }
+  }, [
+    setIsFriend,
+    setFriendReqSent,
+    setFriendReqReceived,
+    authUser,
+    selectedUser,
+  ]);
+
   if (isMessageLoading) {
     return (
       <div className="flex-1 flex flex-col overflow-auto">
@@ -60,6 +75,11 @@ const ChatContainer = () => {
   const handleAddFriend = () => {
     addFriend(selectedUser._id);
     setFriendReqSent(true);
+  };
+
+  const handleAcceptReq = () => {
+    acceptFriendReq(selectedUser._id);
+    setFriendReqReceived(false);
   };
 
   return (
@@ -120,7 +140,10 @@ const ChatContainer = () => {
       {!isFriend && !friendReqSent && friendReqReceived && (
         <div className="p-4 text-center text-emerald-500">
           {selectedUser.name} have sent you a friend request. Waiting for your
-          response!<button className="btn btn-sm ml-2">Accept friend</button>
+          response!
+          <button onClick={handleAcceptReq} className="btn btn-sm ml-2">
+            Accept friend
+          </button>
         </div>
       )}
 

@@ -89,11 +89,24 @@ export const useChatStore = create((set, get) => ({
     } catch (error) {
       toast.error(
         error.response.data.message ||
-          "Something went wrong while sending message"
+          "Something went wrong while sending request"
       );
     }
   },
-  acceptFriendReq: () => {},
+  acceptFriendReq: async (friendId) => {
+    try {
+      FriendServices.acceptReq({ friendId }).then((res) => {
+        toast.success(res.data.message);
+      });
+      useAuthStore.getState().socket.emit("friendReqAccepted", friendId);
+      set({ isFriend: true, friendReqReceived: false });
+    } catch (error) {
+      toast.error(
+        error.response.data.message ||
+          "Something went wrong while accepting request"
+      );
+    }
+  },
   setSelectedUser: (selectedUser) => set({ selectedUser }),
   setIsFriend: (isFriend) => set({ isFriend }),
   setFriendReqSent: (friendReqSent) => set({ friendReqSent }),
