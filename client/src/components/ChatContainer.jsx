@@ -80,6 +80,8 @@ const ChatContainer = () => {
   const handleAcceptReq = () => {
     acceptFriendReq(selectedUser._id);
     setFriendReqReceived(false);
+    setIsFriend(true);
+    getMessages(selectedUser._id);
   };
 
   return (
