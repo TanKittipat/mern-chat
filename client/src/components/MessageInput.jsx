@@ -3,11 +3,11 @@ import { useChatStore } from "../stores/useChatStore";
 import { Image, Send, X } from "lucide-react";
 import toast from "react-hot-toast";
 
-const MessageInput = () => {
+const MessageInput = ({ disabled }) => {
   const [text, setText] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
-  const { sendMessage, isFriend } = useChatStore();
+  const { sendMessage } = useChatStore();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -77,7 +77,7 @@ const MessageInput = () => {
             placeholder="Type a message..."
             value={text}
             onChange={(e) => setText(e.target.value)}
-            disabled={!isFriend}
+            disabled={disabled}
           />
           <input
             type="file"
@@ -85,7 +85,7 @@ const MessageInput = () => {
             className="hidden"
             ref={fileInputRef}
             onChange={handleImageChange}
-            disabled={!isFriend}
+            disabled={disabled}
           />
 
           <button

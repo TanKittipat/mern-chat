@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import toast from "react-hot-toast";
 import MessageServices from "../services/message.service";
+import FriendServices from "../services/friend.service";
 import { useAuthStore } from "./useAuthStore";
 
 export const useChatStore = create((set, get) => ({
@@ -75,5 +76,26 @@ export const useChatStore = create((set, get) => ({
     const socket = useAuthStore.getState().socket;
     socket.off("newMessage");
   },
+  addFriend: async (friendId) => {
+    try {
+      FriendServices.addFriend({ friendId }).then((res) => {
+        toast.success(res.data.message);
+      });
+      const socket = useAuthStore.getState().socket;
+      if (socket) {
+        socket.emit("friendReqSent", friendId);
+      }
+      set({ friendReqSent: true });
+    } catch (error) {
+      toast.error(
+        error.response.data.message ||
+          "Something went wrong while sending message"
+      );
+    }
+  },
+  acceptFriendReq: () => {},
   setSelectedUser: (selectedUser) => set({ selectedUser }),
+  setIsFriend: (isFriend) => set({ isFriend }),
+  setFriendReqSent: (friendReqSent) => set({ friendReqSent }),
+  setFriendReqReceived: (friendReqReceived) => set({ friendReqReceived }),
 }));
