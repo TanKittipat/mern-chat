@@ -95,21 +95,21 @@ export const useAuthStore = create((set, get) => ({
     });
 
     newSocket.on("friendReqReceived", (friendId) => {
-      const selectedUser = useAuthStore.getState().selectedUser;
+      const selectedUser = useChatStore.getState().selectedUser;
       if (friendId === selectedUser._id) {
         useChatStore.getState().setFriendReqReceived(true);
       }
     });
 
     newSocket.on("friendReqSent", (friendId) => {
-      const selectedUser = useAuthStore.getState().selectedUser;
+      const selectedUser = useChatStore.getState().selectedUser;
       if (friendId === selectedUser._id) {
         useChatStore.getState().setFriendReqReceived(false);
       }
     });
 
     newSocket.on("friendReqAccepted", (friendId) => {
-      const selectedUser = useAuthStore.getState().selectedUser;
+      const selectedUser = useChatStore.getState().selectedUser;
       if (friendId === selectedUser._id) {
         useChatStore.getState().setFriendReqReceived(false);
         useChatStore.getState().setFriendReqSent(false);
