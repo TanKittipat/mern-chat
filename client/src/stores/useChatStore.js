@@ -41,8 +41,13 @@ export const useChatStore = create((set, get) => ({
   },
   sendMessage: async (messageData) => {
     const { selectedUser, messages } = get();
+    console.log("Messages", messageData);
+    console.log("User", selectedUser);
+
     try {
       MessageServices.sendMessage(selectedUser._id, messageData).then((res) => {
+        console.log(res);
+
         set({ messages: [...messages, res.data] });
       });
     } catch (error) {
@@ -60,7 +65,7 @@ export const useChatStore = create((set, get) => ({
       const isMessageSendFromSelectedUser =
         newMessage.senderId === selectedUser._id;
       if (!isMessageSendFromSelectedUser) return;
-      set({ messages: [...messages, newMessage] });
+      set({ messages: [...get().messages, newMessage] });
     });
   },
   unsubscribeFromMessages: () => {

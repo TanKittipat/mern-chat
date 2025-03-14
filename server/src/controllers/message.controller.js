@@ -19,6 +19,9 @@ export const getUsersForSidebar = async (req, res) => {
 };
 
 export const sendMessage = async (req, res) => {
+  console.log(req.params);
+  console.log(req.body);
+
   try {
     const { id: receiverId } = req.params;
     if (!receiverId) {
@@ -27,12 +30,11 @@ export const sendMessage = async (req, res) => {
     const senderId = req.user._id;
     const { text, image } = req.body;
 
-    const uploadResponse = await cloudinary.uploader.upload(image);
-    if (!uploadResponse) {
-      return res.status(400).json({ message: "Image upload failed!" });
+    let imageUrl;
+    if (image) {
+      const uploadResponse = await cloudinary.uploader.upload(image);
+      imageUrl = uploadResponse.secure_url;
     }
-
-    const imageUrl = uploadResponse.secure_url;
 
     const newMessage = new MessageModel({
       senderId,

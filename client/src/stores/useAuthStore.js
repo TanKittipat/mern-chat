@@ -54,9 +54,10 @@ export const useAuthStore = create((set, get) => ({
   },
   logout: async () => {
     try {
-      AuthServices.logout().then(() =>
-        toast.success("Logged out successfully!")
-      );
+      AuthServices.logout().then(() => {
+        toast.success("Logged out successfully!");
+        window.location.reload();
+      });
       get().disconnectSocket();
     } catch (error) {
       console.log("Error in logout", error);
