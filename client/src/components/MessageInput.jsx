@@ -7,7 +7,7 @@ const MessageInput = () => {
   const [text, setText] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
   const fileInputRef = useRef(null);
-  const { sendMessage } = useChatStore();
+  const { sendMessage, isFriend } = useChatStore();
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
@@ -77,6 +77,7 @@ const MessageInput = () => {
             placeholder="Type a message..."
             value={text}
             onChange={(e) => setText(e.target.value)}
+            disabled={!isFriend}
           />
           <input
             type="file"
@@ -84,6 +85,7 @@ const MessageInput = () => {
             className="hidden"
             ref={fileInputRef}
             onChange={handleImageChange}
+            disabled={!isFriend}
           />
 
           <button

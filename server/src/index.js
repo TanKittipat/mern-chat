@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import { connectDB } from "./lib/db.js";
 import authRouter from "./routers/auth.router.js";
 import messageRouter from "./routers/message.router.js";
+import friendRouter from "./routers/friend.router.js";
 import { app, server } from "./lib/socket.js";
 
 const BASE_URL = process.env.BASE_URL;
@@ -25,6 +26,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/auth", authRouter);
 app.use("/api/messages", messageRouter);
+app.use("/api/friend", friendRouter);
 
 server.listen(PORT, () => {
   console.log("Server is running on : http://localhost:" + PORT);

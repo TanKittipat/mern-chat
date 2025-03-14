@@ -22,7 +22,7 @@ const Navbar = () => {
                 <User className="size-4" />
                 Profile
               </a>
-              <button className="btn" onClick={() => logout()}>
+              <button className="btn btn-ghost" onClick={() => logout()}>
                 <LogOut className="size-4" />
                 Logout
               </button>

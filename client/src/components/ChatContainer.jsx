@@ -14,6 +14,9 @@ const ChatContainer = () => {
     selectedUser,
     subscribeToMessages,
     unsubscribeFromMessages,
+    isFriend,
+    friendReqSend,
+    friendReqReceived,
   } = useChatStore();
   const { authUser } = useAuthStore();
   const messagesEndRef = useRef(null);
@@ -51,7 +54,6 @@ const ChatContainer = () => {
   return (
     <div className="flex-1 flex flex-col overflow-auto">
       <ChatHeader />
-
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((message) => (
           <div
@@ -91,6 +93,23 @@ const ChatContainer = () => {
           </div>
         ))}
       </div>
+      {!isFriend && !friendReqSend && !friendReqReceived && (
+        <div className="p-4 text-center text-rose-500">
+          You must be friend with this user to send messages!
+          <button className="btn btn-sm ml-2">Add friend</button>
+        </div>
+      )}
+      {!isFriend && friendReqSend && !friendReqReceived && (
+        <div className="p-4 text-center text-amber-500">
+          You have sent a friend request. Waiting for acceptance!
+        </div>
+      )}
+      {!isFriend && !friendReqSend && friendReqReceived && (
+        <div className="p-4 text-center text-emerald-500">
+          {selectedUser.name} have sent you a friend request. Waiting for your
+          response!<button className="btn btn-sm ml-2">Accept friend</button>
+        </div>
+      )}
 
       <MessageInput />
     </div>
