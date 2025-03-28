@@ -19,5 +19,6 @@ export const generateToken = (userId, res) => {
     sameSite: "strict",
     // https ?
     secure: NODE_MODE !== "development",
+    domain: process.env.BASE_URL,
   });
 };
