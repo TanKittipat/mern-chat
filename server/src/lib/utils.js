@@ -16,7 +16,7 @@ export const generateToken = (userId, res) => {
     // XSS attack protection
     httpOnly: true,
     // CSRF
-    sameSite: "none",
+    sameSite: "Strict",
     // https ?
     secure: NODE_MODE !== "development",
   });
